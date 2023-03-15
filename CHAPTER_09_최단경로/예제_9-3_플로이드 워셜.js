@@ -5,24 +5,19 @@ let [n, m, ...rest] = input;
 (n = +n), (m = +m);
 const arr = rest.map((str) => str.split(' ').map((v) => +v));
 
-let graph = Array.from(Array(n + 1), () => Array(n + 1).fill(Infinity));
-
 function solution(n, m, arr) {
-  for (let i = 1; i <= n; i++) graph[i][i] = 0;
+  let d = Array.from(Array(n + 1), () => Array(n + 1).fill(Infinity));
+  for (let i = 1; i <= n; i++) d[i][i] = 0;
   for (const value of arr) {
     const [u, v, cost] = value;
-    graph[u][v] = cost;
+    d[u][v] = cost;
   }
 
-  for (let i = 1; i <= n; i++) {
+  for (let k = 1; k <= n; k++) {
     for (let from = 1; from <= n; from++) {
       for (let to = 1; to <= n; to++) {
-        if (i === from || from === to) continue; //생략 가능
-
-        graph[from][to] = Math.min(
-          graph[from][to],
-          graph[from][i] + graph[i][to]
-        );
+        if (k === from || from === to) continue; //생략 가능
+        d[from][to] = Math.min(d[from][to], d[from][k] + d[k][to]);
       }
     }
   }
@@ -30,8 +25,8 @@ function solution(n, m, arr) {
   let ans = '';
   for (let from = 1; from <= n; from++) {
     for (let to = 1; to <= n; to++) {
-      if (graph[from][to] === Infinity) ans += 'INFINITY';
-      else ans += `${graph[from][to]} `;
+      if (d[from][to] === Infinity) ans += 'INFINITY';
+      else ans += `${d[from][to]} `;
     }
     ans += '\n';
   }

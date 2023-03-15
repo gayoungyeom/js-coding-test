@@ -7,8 +7,8 @@ let [x, k] = arr[m].split(' ').map((v) => +v);
 arr.pop();
 arr = arr.map((str) => str.split(' ').map((v) => +v));
 
-const d = Array.from(Array(n + 1), () => Array(n + 1).fill(Infinity));
 function solution(n, m, x, k, arr) {
+  const d = Array.from(Array(n + 1), () => Array(n + 1).fill(Infinity));
   for (let i = 1; i <= n; i++) d[i][i] = 0;
   for (const value of arr) {
     const [u, v] = value;

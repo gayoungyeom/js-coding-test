@@ -29,7 +29,8 @@ function solution(n, m, edges) {
   let isCycle = false;
   for (const edge of edges) {
     const [a, b] = edge;
-    if (parent[a] !== parent[b]) unionParent(parent, a, b);
+    if (findParent(parent, a) !== findParent(parent, b))
+      unionParent(parent, a, b);
     else {
       isCycle = true;
       break;

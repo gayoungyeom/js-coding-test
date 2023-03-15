@@ -19,7 +19,7 @@ let [nm, ...arr] = input;
 const [n, m] = nm.split(' ').map((v) => +v);
 const edges = arr.map((str) => str.split(' ').map((v) => +v));
 
-function solution(n, arr) {
+function solution(n, m, edges) {
   //부모 테이블 초기화
   let parent = [...Array(n + 1).fill(0)];
   for (let i = 1; i <= n; i++) {
@@ -42,4 +42,4 @@ function solution(n, arr) {
   console.log(`부모 테이블: ${parent.slice(1, n).join(' ')}`);
 }
 
-solution(n, arr);
+solution(n, m, edges);

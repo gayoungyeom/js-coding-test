@@ -10,29 +10,17 @@ function solution(n, arr) {
     const [name1, kor1, eng1, math1] = a;
     const [name2, kor2, eng2, math2] = b;
 
-    if (kor1 < kor2) {
-      return 1;
-    } else if (kor1 > kor2) {
-      return -1;
-    } else {
-      if (eng1 < eng2) {
-        return -1;
-      } else if (eng1 > eng2) {
-        return 1;
-      } else {
-        if (math1 < math2) {
-          return 1;
-        } else if (math1 > math2) {
-          return -1;
-        } else {
-          if (name1 < name2) {
-            return -1;
-          } else {
-            return 1;
-          }
+    if (kor1 === kor2) {
+      if (eng1 === eng2) {
+        if (math1 === math2) {
+          if (name1 < name2) return -1;
+          else return 1;
         }
+        return math2 - math1;
       }
+      return eng1 - eng2;
     }
+    return kor2 - kor1;
   });
 
   let sorted = '';

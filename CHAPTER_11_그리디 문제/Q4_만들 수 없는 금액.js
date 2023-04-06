@@ -1,12 +1,9 @@
-// 5
-// 3 2 1 1 9
-
 const fs = require('fs');
 let input = fs.readFileSync('../tc.txt').toString().trim().split('\n');
 
 let [n, arr] = input;
 n = +n;
-arr = arr.split(' ').map((v) => +v);
+arr = arr.split(' ').map(Number);
 
 function solution(n, arr) {
   arr.sort((a, b) => a - b);

@@ -1,9 +1,7 @@
-//02984
-
 const fs = require('fs');
 let input = fs.readFileSync('../tc.txt').toString().trim();
 
-let s = input.split('').map((v) => +v);
+let s = input.split('').map(Number);
 
 function solution(s) {
   let result = 0;

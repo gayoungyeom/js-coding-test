@@ -1,14 +1,9 @@
-/**
- * 5
- * 2 3 1 2 2
- */
-
 const fs = require('fs');
 let input = fs.readFileSync('../tc.txt').toString().trim().split('\n');
 
 let [n, arr] = input;
 n = +n;
-arr = arr.split(' ').map((v) => +v);
+arr = arr.split(' ').map(Number);
 
 function solution(n, arr) {
   let group = 0;

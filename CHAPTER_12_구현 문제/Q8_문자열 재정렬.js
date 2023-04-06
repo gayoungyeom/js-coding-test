@@ -1,5 +1,3 @@
-//AJKDLSI412K4JSJ9D
-
 const fs = require('fs');
 let input = fs.readFileSync('../tc.txt').toString().trim();
 

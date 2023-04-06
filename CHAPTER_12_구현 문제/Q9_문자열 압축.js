@@ -1,3 +1,4 @@
+//#1
 function solution(str) {
   const n = str.length;
   let ans = n;
@@ -26,4 +27,32 @@ function solution(str) {
   }
 
   return ans;
+}
+
+//#2
+function solution(str) {
+  const n = str.length;
+  let min = n;
+
+  for (let i = 1; i <= n; i++) {
+    let prev = 0;
+    let cnt = 1;
+    let ans = '';
+
+    while (prev <= n) {
+      const cur = str.slice(prev, prev + i);
+
+      if (cur === str.slice(prev + i, prev + i * 2)) {
+        cnt++;
+      } else {
+        ans += `${cnt > 1 ? cnt : ''}${cur}`;
+        cnt = 1;
+      }
+      prev += i;
+    }
+
+    min = Math.min(min, ans.length);
+  }
+
+  return min;
 }

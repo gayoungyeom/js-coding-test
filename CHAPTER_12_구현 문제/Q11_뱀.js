@@ -1,4 +1,4 @@
-//fs 모듈을 사용할 경우 백준 런타임 에러(ENOENT) 발생
+//#1
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -80,3 +80,57 @@ rl.on('line', function (line) {
 
   process.exit();
 });
+
+//#2
+function solution(n, k, apples, l, dirs) {
+  let arr = Array.from(Array(n), () => Array(n).fill(0));
+  for (const [x, y] of apples) {
+    arr[x - 1][y - 1] = 1;
+  }
+
+  const d = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+  ];
+
+  let sec = 0; //시간
+  let curD = 0; //현재 바라보는 방향
+
+  arr[0][0] = 2; //뱀이 위치
+  let head = [0, 0]; //뱀 머리 위치
+
+  const snake = [];
+  snake.push(head);
+
+  while (1) {
+    sec++;
+
+    const [x, y] = head;
+    const [dx, dy] = d[curD];
+    const nx = x + dx;
+    const ny = y + dy;
+
+    if (nx < 0 || nx >= n || ny < 0 || ny >= n) return sec; //벽에 부딪히는 경우
+    if (arr[nx][ny] === 2) return sec; //자기 몸과 부딪히는 경우
+
+    //사과가 없는 경우 꼬리 이동
+    if (arr[nx][ny] === 0) {
+      const tail = snake.shift();
+      arr[tail[0]][tail[1]] = 0;
+    }
+    arr[nx][ny] = 2;
+    head = [nx, ny];
+    snake.push([nx, ny]);
+
+    for (const [X, C] of dirs) {
+      if (Number(X) === sec) {
+        if (C === 'D') curD = (curD + 1) % 4;
+        else curD = curD === 0 ? 3 : curD - 1;
+      }
+    }
+  }
+}
+
+console.log(solution(n, k, apples, l, dirs));

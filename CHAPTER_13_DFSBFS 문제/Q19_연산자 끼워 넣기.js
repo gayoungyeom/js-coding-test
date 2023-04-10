@@ -1,50 +1,31 @@
 const fs = require('fs');
 let input = fs.readFileSync('../tc.txt').toString().trim().split('\n');
 
-let [n, arr, operator] = input;
+let [n, arr, op] = input;
 n = +n;
-arr = arr.split(' ').map((v) => +v);
-operator = operator.split(' ').map((v) => +v);
+arr = arr.split(' ').map(Number);
+op = op.split(' ').map(Number);
 
-function solution(n, arr, operator) {
-  let [add, sub, mul, div] = operator;
+function solution(n, arr, op) {
+  let min = Infinity;
+  let max = -Infinity;
 
-  let max = -Infinity,
-    min = Infinity;
-
-  const go = (i, cur) => {
-    if (i === n) {
-      max = Math.max(max, cur);
-      min = Math.min(min, cur);
+  const dfs = (idx, add, sub, mul, div, result) => {
+    if (idx === n) {
+      min = Math.min(min, result);
+      max = Math.max(max, result);
       return;
     }
 
-    if (add > 0) {
-      add--;
-      go(i + 1, cur + arr[i]);
-      add++;
-    }
-    if (sub > 0) {
-      sub--;
-      go(i + 1, cur - arr[i]);
-      sub++;
-    }
-    if (mul > 0) {
-      mul--;
-      go(i + 1, cur * arr[i]);
-      mul++;
-    }
-    if (div > 0) {
-      div--;
-      go(i + 1, ~~(cur / arr[i]));
-      div++;
-    }
+    if (add > 0) dfs(idx + 1, add - 1, sub, mul, div, result + arr[idx]);
+    if (sub > 0) dfs(idx + 1, add, sub - 1, mul, div, result - arr[idx]);
+    if (mul > 0) dfs(idx + 1, add, sub, mul - 1, div, result * arr[idx]);
+    if (div > 0) dfs(idx + 1, add, sub, mul, div - 1, ~~(result / arr[idx]));
   };
 
-  go(1, arr[0]); //인덱스, 현재까지 계산 결과
+  dfs(1, op[0], op[1], op[2], op[3], arr[0]);
 
-  console.log(max);
-  console.log(min);
+  return `${max}\n${min}`;
 }
 
-solution(n, arr, operator);
+console.log(solution(n, arr, op));

@@ -1,10 +1,8 @@
-let p = '()))((()';
-
 const check = (str) => {
   const s = [];
   for (let i = 0; i < str.length; i++) {
     if (str[i] === '(') {
-      s.push(str[i]);
+      s.push('(');
     } else {
       if (s.length === 0) return false;
       s.pop();
@@ -14,50 +12,40 @@ const check = (str) => {
   return true;
 };
 
-let ans = '';
 function solution(p) {
+  //step1
   if (p === '') return '';
 
-  //2. 균형잡힌 문자열 u,v로 분리
-  let u, v;
-  let lCnt = 0,
-    rCnt = 0;
-
+  //step2
+  let a = 0,
+    b = 0;
+  let u = '',
+    v = '';
   for (let i = 0; i < p.length; i++) {
-    if (p[i] === '(') {
-      lCnt++;
-    } else {
-      rCnt++;
-    }
+    if (p[i] === '(') a++;
+    else b++;
 
-    if (lCnt === rCnt) {
+    if (a === b) {
       u = p.slice(0, i + 1);
-      v = p.slice(i + 1, p.length);
+      v = p.slice(i + 1);
       break;
     }
   }
 
-  //3. 수행 결과 u에 이어 붙여 반환
   if (check(u)) {
-    //3-1. u가 올바른 문자열인 경우
+    //step3
     return u + solution(v);
   } else {
-    //3-2. u가 올바른 문자열이 아닌 경우
+    //step4
     let tmp = '(';
     tmp += solution(v);
     tmp += ')';
 
     u = u.slice(1, u.length - 1);
-    let reversed = ''; //u를 뒤집은 결과
-
-    for (let j = 0; j < u.length; j++) {
-      if (u[j] === '(') reversed += ')';
-      else reversed += '(';
+    for (let i = 0; i < u.length; i++) {
+      if (u[i] === '(') tmp += ')';
+      else tmp += '(';
     }
-
-    tmp += reversed; //수행결과 += u
     return tmp;
   }
 }
-
-console.log(solution(p));

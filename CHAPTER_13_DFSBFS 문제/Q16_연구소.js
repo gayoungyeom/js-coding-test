@@ -33,7 +33,7 @@ function solution(n, m, arr) {
     }
   };
 
-  const nCr = (tmp) => {
+  const nCr = (x, y, tmp) => {
     if (tmp.length === 3) {
       //3개의 벽 세우기
       let graph = JSON.parse(JSON.stringify(arr));
@@ -58,22 +58,23 @@ function solution(n, m, arr) {
       return;
     }
 
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < m; j++) {
+    for (let i = x; i < n; i++) {
+      for (let j = y; j < m; j++) {
         if (!visited[i][j] && arr[i][j] === 0) {
           tmp.push([i, j]);
           visited[i][j] = true;
 
-          nCr(tmp);
+          nCr(i, j + 1, tmp);
 
           tmp.pop();
           visited[i][j] = false;
         }
       }
+      y = 0; //다음 행에 대해서는 첫 번째 열부터 시작
     }
   };
 
-  nCr([]);
+  nCr(0, 0, []);
 
   return ans;
 }

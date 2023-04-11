@@ -23,9 +23,7 @@ function solution(n, arr) {
     return kor2 - kor1;
   });
 
-  let sorted = '';
-  for (const a of arr) sorted += `${a[0]}\n`;
-  return sorted;
+  return arr.map((v) => v[0]).join('\n');
 }
 
 console.log(solution(n, arr));
